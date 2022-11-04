@@ -209,6 +209,11 @@ class TodoList
   def mark_all_undone
     each { |todo| todo.undone! }
   end
+
+  # added this at first for a test, then removed because not necessary
+  # def ==(other_todolist)
+  #   to_a == other_todolist.to_a
+  # end
 end
 
 ### Test cases/code below:
@@ -335,25 +340,25 @@ end
 #   puts todo                   # calls Todo#to_s
 # end
 
-### TodoList#select test cases:
+# ### TodoList#select test cases:
 
-todo1 = Todo.new("Buy milk")
-todo2 = Todo.new("Clean room")
-todo3 = Todo.new("Go to gym")
+# todo1 = Todo.new("Buy milk")
+# todo2 = Todo.new("Clean room")
+# todo3 = Todo.new("Go to gym")
 
-list = TodoList.new("Today's Todos")
-list.add(todo1)
-list.add(todo2)
-list.add(todo3)
+# list = TodoList.new("Today's Todos")
+# list.add(todo1)
+# list.add(todo2)
+# list.add(todo3)
 
-todo1.done!
+# todo1.done!
 
-results = list.select { |todo| todo.done? }    # you need to implement this method
+# results = list.select { |todo| todo.done? }    # you need to implement this method
 
-puts results.inspect
+# puts results.inspect
 
-### TodoList additional methods testing:
+# ### TodoList additional methods testing:
 
-list.find_by_title('Buy milk')
+# list.find_by_title('Buy milk')
 
-p list.all_done
+# p list.all_done
