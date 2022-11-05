@@ -195,4 +195,64 @@ class TodoListTest < MiniTest::Test
     assert_equal(list.title, @list.title)
     assert_equal(list.to_s, @list.select{ |todo| todo.done? }.to_s)
   end
+
+  def test_all_done
+    @todo2.done!
+    done_list1 = @list.select { |todo| todo.done? }
+    done_list2 = @list.all_done
+
+    assert_equal(done_list1.title, done_list2.title)
+    assert_equal(done_list1.to_s, done_list2.to_s)
+  end
+
+  def test_all_not_done
+    @todo2.done!
+    not_done_list1 = @list.select { |todo| !todo.done? }
+    not_done_list2 = @list.all_not_done
+
+    assert_equal(not_done_list1.title, not_done_list2.title)
+    assert_equal(not_done_list1.to_s, not_done_list2.to_s)
+  end
+
+  def test_mark_all_done
+    @list.mark_all_done
+
+    assert(@list.item_at(0).done?)
+    assert(@list.item_at(1).done?)
+    assert(@list.item_at(2).done?)
+  end
+
+  def test_mark_all_undone
+    @list.mark_all_done
+
+    assert(@list.item_at(0).done?)
+    assert(@list.item_at(1).done?)
+    assert(@list.item_at(2).done?)
+
+    @list.mark_all_undone
+
+    assert(!(@list.item_at(0).done?))
+    assert(!(@list.item_at(1).done?))
+    assert(!(@list.item_at(2).done?))
+  end
+
+  def test_find_by_title
+    buy_milk = @list.select { |todo| todo.title == 'Buy milk' }.first
+    clean_room = @list.select { |todo| todo.title == 'Clean room' }.first
+    go_to_gym = @list.select { |todo| todo.title == 'Go to gym' }.first
+
+    assert_equal(buy_milk.title, @list.find_by_title('Buy milk').title)
+    assert_equal(clean_room.title, @list.find_by_title('Clean room').title)
+    assert_equal(go_to_gym.title, @list.find_by_title('Go to gym').title)
+  end
+
+  def test_mark_done
+    @list.mark_all_undone
+    
+    @list.mark_done('Buy milk')
+    @list.mark_done('Clean room')
+    @list.mark_done('Go to gym')
+
+    assert(@list.done?)
+  end
 end
